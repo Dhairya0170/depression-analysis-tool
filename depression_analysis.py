@@ -2,7 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def calculate_depression_score():
-    print("Let’s see where you’re at. Be real. 1 = Nah, not me to 5 = Yep, that’s me.\n")
+    # Get user's name
+    name = input("Enter your name: ").strip()
+    
+    print("\nAlright, let’s see where you’re at. Be real. 1 = Nah, not me to 5 = Yep, that’s me.\n")
     
     questions = [
         "Feeling down or hopeless?",
@@ -50,9 +53,9 @@ def calculate_depression_score():
     print(f"Result: {result}")
     print("Just a check-in. Not a real diagnosis.\n")
     
-    visualize_depression_score(total_score, result)
+    visualize_depression_score(name, total_score, result)
 
-def visualize_depression_score(score, result):
+def visualize_depression_score(name, score, result):
     categories = ["Minimal", "Mild", "Moderate", "Moderately Severe", "Severe"]
     score_thresholds = [15, 30, 45, 55, 60]
 
@@ -62,7 +65,7 @@ def visualize_depression_score(score, result):
     
     plt.bar(categories, score_thresholds, color="gray", edgecolor="white")
     plt.axhline(y=score, color="red", linestyle="--", label=f"Your Score: {score}")
-    plt.title(f"Score: {score} ({result})", color="white")
+    plt.title(f"{name}'s Score: {score} ({result})", color="white")
     plt.xlabel("Categories", color="white")
     plt.ylabel("Score", color="white")
     plt.xticks(color="white")
