@@ -2,90 +2,69 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def calculate_depression_score():
+    print("Alright, let’s see where your head’s at. Answer honestly. Scale: 1 = Nah, not me to 5 = Yep, that’s me.\n")
+    
     questions = [
-        "Do you feel down, depressed, or hopeless?",
-        "Do you enjoy activities as much as before?",
-        "Do you have trouble falling asleep, staying asleep, or sleeping too much?",
-        "Do you feel tired or have little energy?",
-        "Do you feel bad about yourself, or that you're a failure or let yourself or your family down?",
-        "Do you have trouble concentrating on things like reading or watching TV?",
-        "Do you feel restless or find it hard to sit still?",
-        "Do you feel more irritable or easily annoyed than usual?",
-        "Do you find it hard to make decisions, even simple ones?",
-        "Have you lost interest or pleasure in doing things you usually enjoy?",
-        "Have you experienced a significant change in appetite or weight?",
-        "Do you have thoughts of hurting yourself or that you'd be better off not alive?",
+        "Feeling down, depressed, or hopeless lately?",
+        "Enjoying activities as much as you used to?",
+        "Trouble sleeping (too much or too little)?",
+        "Low energy or feeling tired all the time?",
+        "Feeling bad about yourself or thinking you’re a failure?",
+        "Struggling to concentrate, even on simple stuff?",
+        "Feeling restless or like you can’t sit still?",
+        "Getting annoyed or irritable more often?",
+        "Decisions feel like a giant math problem?",
+        "Lost interest in stuff you usually enjoy?",
+        "Noticing big changes in appetite or weight?",
+        "Ever thought you’d be better off not here?",
     ]
 
-    options = {
-        5: "Very True",
-        4: "True",
-        3: "Somewhat True",
-        2: "False",
-        1: "Very False"
-    }
-
     scores = []
-    print("Please answer the following questions honestly by entering a number from 1 to 5:")
-    print("1 = Very False, 2 = False, 3 = Somewhat True, 4 = True, 5 = Very True\n")
-
     for question in questions:
         print(question)
         while True:
             try:
-                answer = int(input("Your answer (1-5): ").strip())
-                if answer in options:
+                answer = int(input("Your answer (1-5): "))
+                if 1 <= answer <= 5:
                     scores.append(answer)
                     break
                 else:
-                    print("Invalid input. Please enter a number between 1 and 5.")
+                    print("It’s 1 to 5, don’t overthink it.")
             except ValueError:
-                print("Invalid input. Please enter a valid number between 1 and 5.")
+                print("Numbers only, please. Let’s keep it simple.")
 
     total_score = np.sum(scores)
-    print("\nYour Depression Score:", total_score)
+    print(f"\nYour total score: {total_score}")
 
     if total_score <= 15:
-        result = "Minimal or no depression"
-        advice = "Keep maintaining a positive mental health routine!"
+        result = "You’re good. No major concerns."
     elif total_score <= 30:
-        result = "Mild depression"
-        advice = "It might help to talk to someone you trust or a mental health professional."
+        result = "Mild signs. Maybe talk to someone if you’re feeling off."
     elif total_score <= 45:
-        result = "Moderate depression"
-        advice = "Consider seeking support from a counselor or therapist."
+        result = "Moderate signs. Getting some professional advice might help."
     elif total_score <= 55:
-        result = "Moderately severe depression"
-        advice = "It's important to reach out to a healthcare provider for help."
+        result = "Moderately severe. Definitely talk to a professional."
     else:
-        result = "Severe depression"
-        advice = "Please seek immediate assistance from a mental health professional."
+        result = "Severe. Don’t wait—reach out for help now."
 
-    print(f"Result: {result}")
-    print(f"Advice: {advice}\n")
-    print("Remember, this tool is for informational purposes only and not a substitute for professional diagnosis.")
-
+    print(f"Assessment: {result}")
+    print("This is just a check-in, not a diagnosis. If anything feels off, seek real advice.\n")
+    
     visualize_depression_score(total_score, result)
 
 def visualize_depression_score(score, result):
-    categories = [
-        "Minimal or No Depression",
-        "Mild Depression",
-        "Moderate Depression",
-        "Moderately Severe Depression",
-        "Severe Depression",
-    ]
+    categories = ["Minimal", "Mild", "Moderate", "Moderately Severe", "Severe"]
     score_thresholds = [15, 30, 45, 55, 60]
 
-    plt.figure(figsize=(10, 6))
-    plt.bar(categories, score_thresholds, color="lightblue", label="Score Thresholds")
+    plt.style.use("dark_background")
+    plt.bar(categories, score_thresholds, color="gray", edgecolor="white")
     plt.axhline(y=score, color="red", linestyle="--", label=f"Your Score: {score}")
-
-    plt.xlabel("Depression Categories")
-    plt.ylabel("Score")
-    plt.title(f"Your Depression Score: {score} ({result})")
-    plt.xticks(rotation=15)
-    plt.legend()
+    plt.title(f"Your Score: {score} ({result})", color="white")
+    plt.xlabel("Depression Categories", color="white")
+    plt.ylabel("Score", color="white")
+    plt.xticks(color="white")
+    plt.yticks(color="white")
+    plt.legend(facecolor="black", edgecolor="white")
     plt.tight_layout()
     plt.show()
 
